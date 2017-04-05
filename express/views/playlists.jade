@@ -1,0 +1,31 @@
+extends header
+
+block content
+  h1= title
+  p Hi #{username}! Welcome to Transmission!
+    
+    div.row.col-sm-6.col-sm-offset-3
+        if (msg.length != 0)
+            div.alert.alert-info.text-center(role="alert") #{msg}
+    div.row
+        div.col-sm-6.col-sm-offset-3.text-center
+            form.form-inline(method='POST', action='/playlists/createPlaylist')
+                div.form-group
+                    label.sr-only(for='playlist') Playlist Name
+                    input.form-control#playlist(type='text', name='playlist', placeholder='Name', value='#{name}')
+                div.form-group
+                    label.sr-only(for='genre') Genre Type
+                    input.form-control#genre(type='text', name='genre', placeholder='Genre', value='#{genre}')
+                button.btn.btn-default(type='submit') Create Playlist
+
+    div.row
+      each playlist in playlists
+        div.small-12.medium-4.large-3.columns
+            p #{playlist.name}
+            p #{playlist.genre}
+            
+        div.row
+          div.small-12
+            a(href='/admin/delete/#{playlist.id}') Delete
+          div.small-12
+            a(href='/admin/edit?id=#{playlist.id}') Edit

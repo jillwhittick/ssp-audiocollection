@@ -1,0 +1,37 @@
+extends header
+
+block content
+    div.row.col-sm-6.col-sm-offset-3
+        if (msg.length != 0)
+            div.alert.alert-info.text-center(role="alert") #{msg}
+    div.row
+        div.col-sm-6.col-sm-offset-3.text-center
+            form.form-inline(method='POST', action='/register/createUser')
+                div.form-group
+                    label.sr-only(for='username') Username
+                    input.form-control#username(type='text', name='username', placeholder='Username', value='#{username}')
+                div.form-group
+                    label.sr-only(for='email') Email
+                    input.form-control#email(type='text', name='email', placeholder='Email', value='#{email}')
+                div.form-group
+                    label.sr-only(for='firstname') First Name
+                    input.form-control#firstname(type='text', name='firstname', placeholder='First Name', value='#{firstname}')
+                div.form-group
+                    label.sr-only(for='lastname') Last Name
+                    input.form-control#lastname(type='text', name='lastname', placeholder='Last Name', value='#{lastname}')
+                div.form-group
+                    label.sr-only(for='password') Password
+                    input.form-control#password(type='password', name='password', placeholder='Password')
+                div.form-group
+                    label.sr-only(for='confirm') Confirm Password
+                    input.form-control#confirm(type='password', name='confirm', placeholder='Confirm Password')
+                button.btn.btn-default(type='submit') Register
+
+    div.row
+        div.col-sm-12
+            h4.text-center or
+    div.row
+        div.col-sm-6.col-sm-offset-3
+            span.div.col-sm-6.col-sm-offset-3.text-center
+              a(href="login")
+             button.btn.btn-default(type="button") Go to Login

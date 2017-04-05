@@ -6,13 +6,46 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var register = require('./routes/register');
+var playlists = require('./routes/playlists');
+var tracks = require('./routes/tracks');
+
+
+var session = require('express-session');
+var mysql = require('mysql');
 
 var app = express();
 
+// setup express-sessions
+var expressionSessionOptions = {
+  secret: 'mySecret',
+  resave: false,
+  saveUninitialized: false
+};
+
+app.use(session(expressionSessionOptions));
+
+
+// setup mysql pool
+var localConnection = {
+   connectionLimit : 3,
+   host : 'localhost',
+   user : 'root',
+   password : 'root',
+   database : 'audioCollection',
+   charset : 'utf8',
+   port : 3306,
+   socketPath : '/Applications/MAMP/tmp/mysql/mysql.sock'
+ };
+
+var pool = mysql.createPool(localConnection);
+
+app.set('dbPool', pool);
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -22,8 +55,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+var loggedIn = function(req, res, next) {
+  if((!req.session.username)) {
+    res.redirect('/');
+  }
+  else {
+    next();
+  }
+};
+
+app.use('/register', register);
+app.use('/playlists', loggedIn);
+app.use('/playlists', playlists);
+app.use('/tracks', loggedIn);
+app.use('/tracks', tracks);
 app.use('/', index);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

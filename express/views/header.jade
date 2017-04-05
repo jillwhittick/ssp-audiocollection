@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title Audio Management App
+    //- link(href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet")
+    //- link(href='/css/style.css', rel="stylesheet")
+    link(href='/foundation/css/foundation.min.css', rel="stylesheet")
+    link(href='/stylesheets/style.css', rel="stylesheet")
+        
+    script(src="/foundation/js/vendor/jquery.js")
+    script(src="/foundation/js/vendor/what-input.js")
+    script(src="/foundation/js/vendor/foundation.js")
+    
+  body.container-fluid-width
+    div.row
+      div.col-sm-6.col-sm-offset-3
+        //- h1.text-center Audio Management App
+        a(href="/logout") Logout
+    block content
