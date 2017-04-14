@@ -4,7 +4,7 @@ var connect = require('../database/connect');
 
 var router = express.Router();
 
-/* GET home page. */
+/* GET playlist home page. */
 router.get('/', function(req, res, next) {
 
     var userMsg = req.session.userMsg ? req.session.userMsg : "";
@@ -83,6 +83,7 @@ router.get('/', function(req, res, next) {
     });
 });
 
+// POST creat playlist in session
 router.post('/createPlaylist', function(req,res, next) {
 
     var username = req.session.username;
@@ -162,7 +163,7 @@ router.post('/createPlaylist', function(req,res, next) {
     });
 });
 
-
+// GET delete playlist
 router.get('/delete/:id', function(req,res, next) {
 
     var username = req.session.username;
@@ -220,6 +221,5 @@ router.get('/delete/:id', function(req,res, next) {
         }
     });
 });
-
 
 module.exports = router;

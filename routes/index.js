@@ -5,7 +5,7 @@ var connect = require('../database/connect');
 var router = express.Router();
 
 
-/* GET home page */
+// GET home page
 router.get('/', function(req, res, next) {
 
     if (!req.session.username) {
@@ -24,17 +24,14 @@ router.get('/', function(req, res, next) {
 
 });
 
-
+// GET logout - destroys session
 router.get('/logout', function(req, res, next) {
     req.session.destroy();
     res.redirect('/');
 });
 
-
+// POST login - start session
 router.post('/login', function(req, res, next) {
-
-
-    console.log("login");
 
     var username = req.body.username;
     var password = req.body.password;

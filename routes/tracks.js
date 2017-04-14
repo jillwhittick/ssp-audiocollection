@@ -7,7 +7,7 @@ var router = express.Router();
 var playlistid = "";
 var playlistname = "";
 
-/* GET home page. */
+// GET tracks home page.
 router.get('/:id/:name', function(req, res, next) {
 
     var userMsg = req.session.userMsg ? req.session.userMsg : "";
@@ -104,6 +104,7 @@ router.get('/:id/:name', function(req, res, next) {
     });
 });
 
+// POST create track in session under specific playlist
 router.post('/createTrack', function(req,res, next) {
 
     var username = req.session.username;
@@ -208,7 +209,7 @@ router.post('/createTrack', function(req,res, next) {
     });
 });
 
-
+//GET delete track
 router.get('/delete/track/:trackid', function(req,res, next) {
 
     var trackid = req.params.trackid;
@@ -244,6 +245,5 @@ router.get('/delete/track/:trackid', function(req,res, next) {
         }
     });
 });
-
 
 module.exports = router;

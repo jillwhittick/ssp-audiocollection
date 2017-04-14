@@ -4,7 +4,7 @@ var connect = require('../database/connect');
 
 var router = express.Router();
 
-/* GET home page */
+// GET home register page
 router.get('/', function(req, res, next) {
 
     var userMsg = req.session.userMsg ? req.session.userMsg : "";
@@ -28,9 +28,8 @@ router.get('/', function(req, res, next) {
     });
 });
 
+// POST create/register user
 router.post('/createUser', function(req,res, next) {
-
-    console.log("createUser");
 
     var username = req.body.username;
     var email = req.body.email;
