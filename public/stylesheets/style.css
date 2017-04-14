@@ -1,4 +1,10 @@
 body {
-    padding: 50px;
     background-image: url("../images/Speaker-System.jpg");
+}
+
+.topheader {
+    background-color: black;
+    color: white;
+    padding-top: 10px;
+    text-align: right;
 }
