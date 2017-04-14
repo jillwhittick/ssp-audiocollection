@@ -1,2 +1,2 @@
-/express/node_modules
-/express/public
+/node_modules
+/.env

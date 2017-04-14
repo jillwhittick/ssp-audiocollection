@@ -57,7 +57,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-var loggedIn = function(req, res, next) {
+var access = function(req, res, next) {
   if((!req.session.username)) {
     res.redirect('/');
   }
@@ -67,9 +67,9 @@ var loggedIn = function(req, res, next) {
 };
 
 app.use('/register', register);
-app.use('/playlists', loggedIn);
+app.use('/playlists', access);
 app.use('/playlists', playlists);
-app.use('/tracks', loggedIn);
+app.use('/tracks', access);
 app.use('/tracks', tracks);
 app.use('/', index);
 

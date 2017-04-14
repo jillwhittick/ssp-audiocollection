@@ -1,0 +1,50 @@
+extends header
+
+block content
+    div.row
+        div.small-12.columns
+            h1 Hi #{username}! This is Transmission!
+            p Create or select a playlist. 
+    
+    div.row
+        div.small-12.medium-6.columns    
+            div.row
+                div.small-12.medium-8.columns
+                    if (msg.length != 0)
+                        div.alert.alert-info.text-center(role="alert") #{msg}
+            div.row
+                div.small-12.medium-8.columns
+                    form.form-inline(method='POST', action='/playlists/createPlaylist')
+                        div.form-group
+                            label.sr-only(for='playlist') Playlist Name
+                            input.form-control#playlist(type='text', name='playlist', placeholder='Name', value='#{name}')
+                        div.form-group
+                            label.sr-only(for='genre') Genre Type
+                            //- input.form-control#genre(type='text', name='genre', placeholder='Genre', value='#{genre}')                    
+                            select.form-control#genre(name='genre' value='#{genre}')
+                                option -- Select Genre -- 
+                                option pop 
+                                option rock
+                                option jazz
+                                option hip-hop
+                                option blues
+                                option classical
+                                option talk            
+                                                    
+                        button.button.small(type='submit') Create Playlist
+                        &nbsp;
+                        button.button.small(type='reset') Reset From
+
+        div.small-12.medium-6.columns
+            div.row
+                each playlist in playlists
+                    div.small-12.medium-6.columns.end
+                        //- div.row
+                        div.small-12.columns
+                            a(href='/tracks/#{playlist.id}/#{playlist.name}') #{playlist.name}
+                            p Genre: #{playlist.genre}
+                            
+                        div.small-12.columns            
+                            a.button.small(href='/playlists/delete/#{playlist.id}') Delete
+                            //- &nbsp;
+                            //- a.button.small(href='/playlists/edit?id=#{playlist.id}') Edit
