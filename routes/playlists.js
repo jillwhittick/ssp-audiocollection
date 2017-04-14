@@ -168,7 +168,6 @@ router.get('/delete/:id', function(req,res, next) {
     var username = req.session.username;
     var playlistid = req.params.id;
 
-
     connect(function(err, connection) {
         if (req.params.id) {
             if (err) {
@@ -203,9 +202,9 @@ router.get('/delete/:id', function(req,res, next) {
                                     connection.query('DELETE FROM playlists WHERE playlistId=?',[req.params.id], function(err, results, fields) {
                                         connection.release();
 
-                                        console.log('delete complete');
+                                        console.log('Playlist deleted');
 
-                                        req.session.userMsg = "Playlist deleted.";
+                                        // req.session.userMsg = "Playlist deleted.";
                                         req.session.username = username;
                                         req.session.playlistid = '';
                                         req.session.playlistname = "";

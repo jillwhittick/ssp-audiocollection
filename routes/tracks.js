@@ -51,7 +51,7 @@ router.get('/:id/:name', function(req, res, next) {
                     }
                         // no playlists
                         else if (results.length === 0) {
-                        console.log("No playlists found");
+                        console.log("No tracks found");
                         req.session.userMsg = "";
                         req.session.username = username;
                         req.session.playlistid = playlistid;
@@ -209,58 +209,35 @@ router.post('/createTrack', function(req,res, next) {
 });
 
 
-router.get('/delete/:id', function(req,res, next) {
+router.get('/delete/track/:trackid', function(req,res, next) {
 
-    var username = req.session.username;
-    var playlistid = req.params.id;
-
+    var trackid = req.params.trackid;
 
     connect(function(err, connection) {
-        if (req.params.id) {
+        if (req.params.trackid) {
             if (err) {
                 console.log("Error connecting to the database");
                 throw err;
             }
             else {
-                connection.query('SELECT * FROM tracks WHERE trackPlaylist=?',[req.params.id], function(err, results, fields) {
-                    // connection.release();
+                connect(function(err, connection) {
+                    if (req.params.trackid) {
+                        if (err) {
+                            console.log("Error connecting to the database");
+                            throw err;
+                        }
+                        else {
+                            connection.query('DELETE FROM tracks WHERE trackId=?',[req.params.trackid], function(err, results, fields) {
+                                connection.release();
 
-                    if(err) {
-                        throw err;
-                    }
-                    // fail - tracks exists playlist
-                    else if (results.length !== 0) {
-                        console.log("Tracks exist for playlist");
-                        req.session.userMsg = "Unable to delete playlist. Playlist contains tracks.";
-                        req.session.username = username;
-                        req.session.playlistid = '';
-                        req.session.playlistname = "";
-                        // req.session.genre = genre;
-                        res.redirect('/playlists');
-                    }
-                    else{
-                        connect(function(err, connection) {
-                            if (req.params.id) {
-                                if (err) {
-                                    console.log("Error connecting to the database");
-                                    throw err;
-                                }
-                                else {
-                                    connection.query('DELETE FROM playlists WHERE playlistId=?',[req.params.id], function(err, results, fields) {
-                                        connection.release();
+                                console.log('Track deleted');
 
-                                        console.log('delete complete');
+                                req.session.playlistid = playlistid;
+                                req.session.playlistname = playlistname;
 
-                                        req.session.userMsg = "Playlist deleted.";
-                                        req.session.username = username;
-                                        req.session.playlistid = '';
-                                        req.session.playlistname = "";
-                                        // req.session.genre = genre;
-                                        res.redirect('/playlists');
-                                    });
-                                }
-                            }
-                        });
+                                res.redirect('/tracks/' + playlistid + '/' + playlistname);
+                            });
+                        }
                     }
                 });
             }

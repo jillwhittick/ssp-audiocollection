@@ -45,6 +45,4 @@ block content
                             p Genre: #{playlist.genre}
                             
                         div.small-12.columns            
-                            a.button.small(href='/playlists/delete/#{playlist.id}') Delete
-                            //- &nbsp;
-                            //- a.button.small(href='/playlists/edit?id=#{playlist.id}') Edit
+                            a.button.small(href='/playlists/delete/' + playlist.id) Delete
